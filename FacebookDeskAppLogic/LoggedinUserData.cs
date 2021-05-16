@@ -233,6 +233,11 @@ namespace FacebookDeskAppLogic
             }
         }
 
+        public ICollection<Album> GetAllAlbums()
+        {
+             return m_ListOfAlbums;
+        }
+
         public ICollection<User> GetAllFriends()
         {
             return m_ListOfFriends;
@@ -241,11 +246,6 @@ namespace FacebookDeskAppLogic
         public ICollection<Group> GetAllGroups()
         {
             return m_ListOfGroups;
-        }
-
-        public ICollection<Album> GetAllAlbums()
-        {
-             return m_ListOfAlbums;
         }
 
         public ICollection<Post> GetPostsByPlaceName(string i_PlaceName)

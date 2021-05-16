@@ -16,6 +16,7 @@ namespace FacebookDeskAppUI
         private const string k_CommentsTitle = "Comments";
         private const string k_LikesTitle = "Likes";
         private LoggedinUserData m_LoggedInUserData;
+        private static readonly object sr_lock = new object();
 
         // Ctor
         public MainForm()
@@ -27,22 +28,24 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //------------------------  General functions  -------------------------//
+        //------------------------  General Methods  -------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setListBox<T>(ICollection<T> i_List, ListBox i_ListBox)
         {
-            postListboxBindingSource.DataSource = i_List;
-            //i_ListBox.Items.Clear();
-            //foreach (T elem in i_List)
-            //{
-            //    i_ListBox.Items.Add(elem);
-            //}
+            lock(sr_lock)
+            {
+                i_ListBox.Items.Clear();
+                foreach(T elem in i_List)
+                {
+                    i_ListBox.Items.Add(elem);
+                }
+            }
         }
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //------------------- Setting ListBox of posts functions----------------//
+        //------------------- Setting ListBox of posts Methods----------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setPostsListByPlaces(string i_PlaceName)
@@ -50,9 +53,8 @@ namespace FacebookDeskAppUI
             ICollection<Post> listOfPosts = m_LoggedInUserData.GetPostsByPlaceName(i_PlaceName);
             if(listOfPosts != null)
             {
-                //ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
-                //setListBox(listOfPostsWrapper, listBoxPosts);
-                setListBox(listOfPosts, listBoxPosts);
+                ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
+                setListBox(listOfPostsWrapper, listBoxPosts);
             }
         }
 
@@ -61,9 +63,8 @@ namespace FacebookDeskAppUI
             ICollection<Post> listOfPosts = m_LoggedInUserData.GetPostsByNumOfComments(i_NumOfComments);
             if(listOfPosts != null)
             {
-                //ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
-                //setListBox(listOfPostsWrapper, listBoxPosts);
-                setListBox(listOfPosts, listBoxPosts);
+                ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
+                setListBox(listOfPostsWrapper, listBoxPosts);
             }
         }
 
@@ -72,20 +73,19 @@ namespace FacebookDeskAppUI
             ICollection<Post> listOfPosts = m_LoggedInUserData.GetPostsByNumOfLikes(i_NumOfLikes);
             if(listOfPosts != null)
             {
-                //ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
-                //setListBox(listOfPostsWrapper, listBoxPosts);
-                setListBox(listOfPosts, listBoxPosts);
+                ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
+                setListBox(listOfPostsWrapper, listBoxPosts);
             }
         }
 
         private void setListBoxPostsByListOfAll()
         {
+            listBoxPosts.Items.Clear();
             ICollection<Post> listOfPosts = m_LoggedInUserData.FetchAllPosts();
             if(listOfPosts != null)
             {
-                //ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
-                //setListBox(listOfPostsWrapper, listBoxPosts);
-                setListBox(listOfPosts, listBoxPosts);
+                ICollection<PostWrapper> listOfPostsWrapper = generateListOfPostsWrappers(listOfPosts);
+                setListBox(listOfPostsWrapper, listBoxPosts);
             }
         }
 
@@ -93,24 +93,18 @@ namespace FacebookDeskAppUI
         {
             try
             {
-                postBindingSource.DataSource = listBoxPosts.SelectedItem as Post;
+                PostWrapper postWrapper = listBoxPosts.SelectedItem as PostWrapper;
+                postBindingSource.DataSource = postWrapper.Post;
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Failed to show post");
             }
-            //PostWrapper postWrapper = listBoxPosts.SelectedItem as PostWrapper;
-            //string postName = postWrapper.Post.Name;
-            //string postMessage = postWrapper.Post.Message;
-            //string postPictureURL = postWrapper.Post.PictureURL;
-            //postNameLabel.Text = postName;
-            //labelPostBody.Text = postMessage;
-            //pictureBoxPostPhoto.ImageLocation = postPictureURL;
         }
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //----------- Setting combobox of sub filter of posts functions---------//
+        //----------- Setting combobox of sub filter of posts Methods---------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setComboboxPostsSubFilter(ICollection<string> i_Options)
@@ -167,8 +161,6 @@ namespace FacebookDeskAppUI
             string optionOfFilter = comboBoxPostsFilter.Text;
             string optionOfSubFilter = comboBoxPostsSubFilter.Text;
 
-            //listBoxShowPosts.Items.Clear();
-
             if (optionOfFilter == k_PlacesTitle)
             {
                 setPostsListByPlaces(optionOfSubFilter);
@@ -185,7 +177,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //-----------------combobox of filter of posts functions---------------//
+        //-----------------combobox of filter of posts Methods----------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setComboBoxPostsFilter()
@@ -206,7 +198,6 @@ namespace FacebookDeskAppUI
             {
                 comboBoxPostsSubFilter.Visible = false;
                 labelPostsSubFilter.Visible = false;
-                //listBoxShowPosts.Items.Clear();
                 setListBoxPostsByListOfAll();
             }
             else if (category == k_PlacesTitle)
@@ -231,23 +222,23 @@ namespace FacebookDeskAppUI
             comboBoxPostsSubFilter.Visible = true;
             labelPostsSubFilter.Visible = true;
             comboBoxPostsSubFilter.Items.Clear();
-            //listBoxShowPosts.Items.Clear();
         }
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //---------------------------login functions----------------------------//
+        //---------------------------login Methods----------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-
         private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(listBoxAlbums.SelectedItem != null)
             {
                 try
                 {
+                    listBoxPhotos.Items.Clear();
                     string albumName = (listBoxAlbums.SelectedItem as Album).Name;
-                    photoBindingSource.DataSource = m_LoggedInUserData.FetchPhotosByAlbumName(albumName);
+                    List<Photo> photos = m_LoggedInUserData.FetchPhotosByAlbumName(albumName);
+                    setListBox(photos, listBoxPhotos);
                 }
                 catch(Exception ex)
                 {
@@ -260,7 +251,7 @@ namespace FacebookDeskAppUI
         {
             if(listBoxPhotos.SelectedItem is Photo photo)
             {
-                pictureBoxPhoto.ImageLocation = photo.PictureNormalURL;
+                photoBindingSource.DataSource = photo;
             }
         }
 
@@ -276,7 +267,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //---------------------------Wrapper functions--------------------------//
+        //---------------------------Wrapper Methods--------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private ICollection<PostWrapper> generateListOfPostsWrappers(ICollection<Post> i_ListOfPosts)
@@ -319,7 +310,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //----------------------initialization functions------------------------//
+        //----------------------initialization Methods------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         public void InitFormDetails()
@@ -330,6 +321,10 @@ namespace FacebookDeskAppUI
             setAlbumsPage();
             setFriendsPage();
             setGroupsPage();
+            //new Thread(setPostsPage).Start();
+            //new Thread(setAlbumsPage).Start();
+            //new Thread(setFriendsPage).Start();
+            //new Thread(setGroupsPage).Start();
         }
 
         private void setProfileDetails()
@@ -355,7 +350,11 @@ namespace FacebookDeskAppUI
         {
             try
             {
-                albumBindingSource.DataSource = m_LoggedInUserData.User.Albums;
+                listBoxAlbums.DisplayMember = "Name";
+                listBoxPhotos.DisplayMember = "Id";
+                m_LoggedInUserData.FetchAlbums();
+                ICollection<Album> albums = m_LoggedInUserData.GetAllAlbums();
+                setListBox(albums, listBoxAlbums);
             }
             catch (Exception ex)
             {
@@ -367,7 +366,9 @@ namespace FacebookDeskAppUI
         {
             try
             {
-                friendsListboxBindingSource.DataSource = m_LoggedInUserData.User.Friends;
+                listBoxFriends.DisplayMember = "Name";
+                ICollection<User> friends = m_LoggedInUserData.GetAllFriends();
+                setListBox(friends, listBoxFriends);
             }
             catch (Exception ex)
             {
@@ -379,7 +380,9 @@ namespace FacebookDeskAppUI
         {
             try
             {
-                groupBindingSource.DataSource = m_LoggedInUserData.User.Groups;
+                listBoxGroups.DisplayMember = "Name";
+                ICollection<Group> groups = m_LoggedInUserData.GetAllGroups();
+                setListBox(groups, listBoxGroups);
             }
             catch (Exception ex)
             {

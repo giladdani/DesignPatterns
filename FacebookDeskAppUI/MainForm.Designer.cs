@@ -58,14 +58,14 @@
             this.labelFriendNameVal = new System.Windows.Forms.Label();
             this.labelFriendMiddleNameVal = new System.Windows.Forms.Label();
             this.tabPhotos = new System.Windows.Forms.TabPage();
-            this.pictureBoxPhoto = new FacebookDeskAppUI.PictureBoxProxy();
-            this.listBoxPhotos = new System.Windows.Forms.ListBox();
+            this.pictureNormalURLPictureBox = new System.Windows.Forms.PictureBox();
             this.photoBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.listBoxPhotos = new System.Windows.Forms.ListBox();
             this.listBoxAlbums = new System.Windows.Forms.ListBox();
-            this.albumBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPosts = new System.Windows.Forms.TabPage();
+            this.labelBestHourToPostVal = new System.Windows.Forms.Label();
             this.buttonBestHourToPost = new System.Windows.Forms.Button();
             this.panelCreatePost = new System.Windows.Forms.Panel();
             this.richTextBoxCreatePost = new System.Windows.Forms.RichTextBox();
@@ -75,10 +75,13 @@
             this.labelPostsFilter = new System.Windows.Forms.Label();
             this.labelPostsSubFilter = new System.Windows.Forms.Label();
             this.listBoxPosts = new System.Windows.Forms.ListBox();
-            this.postBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBoxPostsSubFilter = new System.Windows.Forms.ComboBox();
             this.panelPost = new System.Windows.Forms.Panel();
             this.panelPostBody = new System.Windows.Forms.Panel();
+            this.labelPostBody = new System.Windows.Forms.Label();
+            this.postBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.labelPostName = new System.Windows.Forms.Label();
+            this.pictureBoxPostPhoto = new System.Windows.Forms.PictureBox();
             this.tabAbout = new System.Windows.Forms.TabPage();
             this.panel10 = new System.Windows.Forms.Panel();
             this.labelAboutBirthYearVal = new System.Windows.Forms.Label();
@@ -89,12 +92,7 @@
             this.labelAboutName = new System.Windows.Forms.Label();
             this.pictureBoxAboutPhoto = new System.Windows.Forms.PictureBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.labelPostBody = new System.Windows.Forms.Label();
-            this.labelPostName = new System.Windows.Forms.Label();
-            this.pictureBoxPostPhoto = new System.Windows.Forms.PictureBox();
-            this.postListboxBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.labelBestHourToPostVal = new System.Windows.Forms.Label();
-            this.friendsListboxBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             labelFriendBirthday = new System.Windows.Forms.Label();
             labelFriendEmail = new System.Windows.Forms.Label();
             labelFriendMiddleName = new System.Windows.Forms.Label();
@@ -110,21 +108,18 @@
             this.panelFriendDetails.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.friendsDetailsBindingSource)).BeginInit();
             this.tabPhotos.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureNormalURLPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.photoBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).BeginInit();
             this.tabPosts.SuspendLayout();
             this.panelCreatePost.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).BeginInit();
             this.panelPost.SuspendLayout();
             this.panelPostBody.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).BeginInit();
             this.tabAbout.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAboutPhoto)).BeginInit();
             this.tabControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.postListboxBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsListboxBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // labelFriendBirthday
@@ -293,8 +288,6 @@
             // 
             // listBoxFriends
             // 
-            this.listBoxFriends.DataSource = this.friendsListboxBindingSource;
-            this.listBoxFriends.DisplayMember = "Birthday";
             this.listBoxFriends.FormattingEnabled = true;
             this.listBoxFriends.ItemHeight = 16;
             this.listBoxFriends.Location = new System.Drawing.Point(34, 50);
@@ -389,7 +382,7 @@
             // tabPhotos
             // 
             this.tabPhotos.AutoScroll = true;
-            this.tabPhotos.Controls.Add(this.pictureBoxPhoto);
+            this.tabPhotos.Controls.Add(this.pictureNormalURLPictureBox);
             this.tabPhotos.Controls.Add(this.listBoxPhotos);
             this.tabPhotos.Controls.Add(this.listBoxAlbums);
             this.tabPhotos.Controls.Add(this.label3);
@@ -403,19 +396,22 @@
             this.tabPhotos.Text = "Photos";
             this.tabPhotos.UseVisualStyleBackColor = true;
             // 
-            // pictureBoxPhoto
+            // pictureNormalURLPictureBox
             // 
-            this.pictureBoxPhoto.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBoxPhoto.Location = new System.Drawing.Point(239, 97);
-            this.pictureBoxPhoto.Name = "pictureBoxPhoto";
-            this.pictureBoxPhoto.Size = new System.Drawing.Size(208, 147);
-            this.pictureBoxPhoto.TabIndex = 8;
-            this.pictureBoxPhoto.TabStop = false;
+            this.pictureNormalURLPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.photoBindingSource, "PictureNormalURL", true));
+            this.pictureNormalURLPictureBox.DataBindings.Add(new System.Windows.Forms.Binding("ImageLocation", this.photoBindingSource, "PictureNormalURL", true));
+            this.pictureNormalURLPictureBox.Location = new System.Drawing.Point(234, 69);
+            this.pictureNormalURLPictureBox.Name = "pictureNormalURLPictureBox";
+            this.pictureNormalURLPictureBox.Size = new System.Drawing.Size(334, 324);
+            this.pictureNormalURLPictureBox.TabIndex = 8;
+            this.pictureNormalURLPictureBox.TabStop = false;
+            // 
+            // photoBindingSource
+            // 
+            this.photoBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Photo);
             // 
             // listBoxPhotos
             // 
-            this.listBoxPhotos.DataSource = this.photoBindingSource;
-            this.listBoxPhotos.DisplayMember = "Name";
             this.listBoxPhotos.FormattingEnabled = true;
             this.listBoxPhotos.ItemHeight = 16;
             this.listBoxPhotos.Location = new System.Drawing.Point(36, 245);
@@ -425,14 +421,8 @@
             this.listBoxPhotos.ValueMember = "Album";
             this.listBoxPhotos.SelectedIndexChanged += new System.EventHandler(this.listBoxPhotos_SelectedIndexChanged);
             // 
-            // photoBindingSource
-            // 
-            this.photoBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Photo);
-            // 
             // listBoxAlbums
             // 
-            this.listBoxAlbums.DataSource = this.albumBindingSource;
-            this.listBoxAlbums.DisplayMember = "Name";
             this.listBoxAlbums.FormattingEnabled = true;
             this.listBoxAlbums.ItemHeight = 16;
             this.listBoxAlbums.Location = new System.Drawing.Point(33, 69);
@@ -441,10 +431,6 @@
             this.listBoxAlbums.TabIndex = 7;
             this.listBoxAlbums.ValueMember = "Comments";
             this.listBoxAlbums.SelectedIndexChanged += new System.EventHandler(this.listBoxAlbums_SelectedIndexChanged);
-            // 
-            // albumBindingSource
-            // 
-            this.albumBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Album);
             // 
             // label3
             // 
@@ -484,12 +470,20 @@
             this.tabPosts.Text = "Posts";
             this.tabPosts.UseVisualStyleBackColor = true;
             // 
+            // labelBestHourToPostVal
+            // 
+            this.labelBestHourToPostVal.AutoSize = true;
+            this.labelBestHourToPostVal.Location = new System.Drawing.Point(41, 322);
+            this.labelBestHourToPostVal.Name = "labelBestHourToPostVal";
+            this.labelBestHourToPostVal.Size = new System.Drawing.Size(0, 17);
+            this.labelBestHourToPostVal.TabIndex = 18;
+            // 
             // buttonBestHourToPost
             // 
-            this.buttonBestHourToPost.Location = new System.Drawing.Point(32, 294);
+            this.buttonBestHourToPost.Location = new System.Drawing.Point(44, 313);
             this.buttonBestHourToPost.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonBestHourToPost.Name = "buttonBestHourToPost";
-            this.buttonBestHourToPost.Size = new System.Drawing.Size(189, 26);
+            this.buttonBestHourToPost.Size = new System.Drawing.Size(193, 26);
             this.buttonBestHourToPost.TabIndex = 17;
             this.buttonBestHourToPost.Text = "Get Best Hour To Post";
             this.buttonBestHourToPost.UseVisualStyleBackColor = true;
@@ -539,7 +533,7 @@
             // comboBoxPostsFilter
             // 
             this.comboBoxPostsFilter.FormattingEnabled = true;
-            this.comboBoxPostsFilter.Location = new System.Drawing.Point(32, 55);
+            this.comboBoxPostsFilter.Location = new System.Drawing.Point(21, 55);
             this.comboBoxPostsFilter.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxPostsFilter.Name = "comboBoxPostsFilter";
             this.comboBoxPostsFilter.Size = new System.Drawing.Size(184, 24);
@@ -549,7 +543,7 @@
             // labelPostsFilter
             // 
             this.labelPostsFilter.AutoSize = true;
-            this.labelPostsFilter.Location = new System.Drawing.Point(34, 26);
+            this.labelPostsFilter.Location = new System.Drawing.Point(18, 26);
             this.labelPostsFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPostsFilter.Name = "labelPostsFilter";
             this.labelPostsFilter.Size = new System.Drawing.Size(200, 17);
@@ -559,7 +553,7 @@
             // labelPostsSubFilter
             // 
             this.labelPostsSubFilter.AutoSize = true;
-            this.labelPostsSubFilter.Location = new System.Drawing.Point(34, 95);
+            this.labelPostsSubFilter.Location = new System.Drawing.Point(18, 95);
             this.labelPostsSubFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelPostsSubFilter.Name = "labelPostsSubFilter";
             this.labelPostsSubFilter.Size = new System.Drawing.Size(141, 17);
@@ -568,26 +562,20 @@
             // 
             // listBoxPosts
             // 
-            this.listBoxPosts.DataSource = this.postListboxBindingSource;
-            this.listBoxPosts.DisplayMember = "Name";
             this.listBoxPosts.FormattingEnabled = true;
             this.listBoxPosts.ItemHeight = 16;
-            this.listBoxPosts.Location = new System.Drawing.Point(32, 175);
+            this.listBoxPosts.Location = new System.Drawing.Point(21, 175);
             this.listBoxPosts.Margin = new System.Windows.Forms.Padding(4);
             this.listBoxPosts.Name = "listBoxPosts";
-            this.listBoxPosts.Size = new System.Drawing.Size(195, 84);
+            this.listBoxPosts.Size = new System.Drawing.Size(232, 84);
             this.listBoxPosts.TabIndex = 1;
             this.listBoxPosts.ValueMember = "Caption";
             this.listBoxPosts.SelectedIndexChanged += new System.EventHandler(this.listBoxPosts_SelectedIndexChanged);
             // 
-            // postBindingSource
-            // 
-            this.postBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
-            // 
             // comboBoxPostsSubFilter
             // 
             this.comboBoxPostsSubFilter.FormattingEnabled = true;
-            this.comboBoxPostsSubFilter.Location = new System.Drawing.Point(32, 128);
+            this.comboBoxPostsSubFilter.Location = new System.Drawing.Point(21, 127);
             this.comboBoxPostsSubFilter.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxPostsSubFilter.Name = "comboBoxPostsSubFilter";
             this.comboBoxPostsSubFilter.Size = new System.Drawing.Size(184, 24);
@@ -616,6 +604,37 @@
             this.panelPostBody.Name = "panelPostBody";
             this.panelPostBody.Size = new System.Drawing.Size(317, 216);
             this.panelPostBody.TabIndex = 8;
+            // 
+            // labelPostBody
+            // 
+            this.labelPostBody.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postBindingSource, "Message", true));
+            this.labelPostBody.Location = new System.Drawing.Point(18, 20);
+            this.labelPostBody.Name = "labelPostBody";
+            this.labelPostBody.Size = new System.Drawing.Size(281, 179);
+            this.labelPostBody.TabIndex = 1;
+            // 
+            // postBindingSource
+            // 
+            this.postBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
+            // 
+            // labelPostName
+            // 
+            this.labelPostName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postBindingSource, "Name", true));
+            this.labelPostName.Location = new System.Drawing.Point(42, 28);
+            this.labelPostName.Name = "labelPostName";
+            this.labelPostName.Size = new System.Drawing.Size(281, 23);
+            this.labelPostName.TabIndex = 3;
+            // 
+            // pictureBoxPostPhoto
+            // 
+            this.pictureBoxPostPhoto.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.postBindingSource, "PictureURL", true));
+            this.pictureBoxPostPhoto.DataBindings.Add(new System.Windows.Forms.Binding("ImageLocation", this.postBindingSource, "PictureURL", true));
+            this.pictureBoxPostPhoto.Location = new System.Drawing.Point(23, 295);
+            this.pictureBoxPostPhoto.Name = "pictureBoxPostPhoto";
+            this.pictureBoxPostPhoto.Size = new System.Drawing.Size(317, 129);
+            this.pictureBoxPostPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPostPhoto.TabIndex = 5;
+            this.pictureBoxPostPhoto.TabStop = false;
             // 
             // tabAbout
             // 
@@ -728,48 +747,15 @@
             this.tabControl2.TabIndex = 14;
             this.tabControl2.Tag = "fds";
             // 
-            // labelPostBody
+            // checkBox1
             // 
-            this.labelPostBody.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postBindingSource, "Message", true));
-            this.labelPostBody.Location = new System.Drawing.Point(18, 20);
-            this.labelPostBody.Name = "labelPostBody";
-            this.labelPostBody.Size = new System.Drawing.Size(281, 179);
-            this.labelPostBody.TabIndex = 1;
-            // 
-            // labelPostName
-            // 
-            this.labelPostName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postBindingSource, "Name", true));
-            this.labelPostName.Location = new System.Drawing.Point(42, 28);
-            this.labelPostName.Name = "labelPostName";
-            this.labelPostName.Size = new System.Drawing.Size(281, 23);
-            this.labelPostName.TabIndex = 3;
-            // 
-            // pictureBoxPostPhoto
-            // 
-            this.pictureBoxPostPhoto.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.postBindingSource, "PictureURL", true));
-            this.pictureBoxPostPhoto.DataBindings.Add(new System.Windows.Forms.Binding("ImageLocation", this.postBindingSource, "PictureURL", true));
-            this.pictureBoxPostPhoto.Location = new System.Drawing.Point(23, 295);
-            this.pictureBoxPostPhoto.Name = "pictureBoxPostPhoto";
-            this.pictureBoxPostPhoto.Size = new System.Drawing.Size(317, 129);
-            this.pictureBoxPostPhoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxPostPhoto.TabIndex = 5;
-            this.pictureBoxPostPhoto.TabStop = false;
-            // 
-            // postListboxBindingSource
-            // 
-            this.postListboxBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Post);
-            // 
-            // labelBestHourToPostVal
-            // 
-            this.labelBestHourToPostVal.AutoSize = true;
-            this.labelBestHourToPostVal.Location = new System.Drawing.Point(41, 322);
-            this.labelBestHourToPostVal.Name = "labelBestHourToPostVal";
-            this.labelBestHourToPostVal.Size = new System.Drawing.Size(0, 17);
-            this.labelBestHourToPostVal.TabIndex = 18;
-            // 
-            // friendsListboxBindingSource
-            // 
-            this.friendsListboxBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.User);
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(850, 438);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(154, 21);
+            this.checkBox1.TabIndex = 15;
+            this.checkBox1.Text = "Remember Settings";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -777,6 +763,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.pictureBoxProfilePhoto);
             this.Controls.Add(this.labelProfileName);
@@ -794,24 +781,21 @@
             ((System.ComponentModel.ISupportInitialize)(this.friendsDetailsBindingSource)).EndInit();
             this.tabPhotos.ResumeLayout(false);
             this.tabPhotos.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPhoto)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureNormalURLPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.photoBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.albumBindingSource)).EndInit();
             this.tabPosts.ResumeLayout(false);
             this.tabPosts.PerformLayout();
             this.panelCreatePost.ResumeLayout(false);
             this.panelCreatePost.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).EndInit();
             this.panelPost.ResumeLayout(false);
             this.panelPostBody.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.postBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).EndInit();
             this.tabAbout.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAboutPhoto)).EndInit();
             this.tabControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhoto)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.postListboxBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.friendsListboxBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -852,11 +836,8 @@
         private System.Windows.Forms.Label labelListOfGroups;
         private System.Windows.Forms.Button buttonBestHourToPost;
         private System.Windows.Forms.ListBox listBoxAlbums;
-        private System.Windows.Forms.BindingSource albumBindingSource;
         private System.Windows.Forms.ListBox listBoxPhotos;
         private System.Windows.Forms.BindingSource photoBindingSource;
-        //private System.Windows.Forms.PictureBox pictureBoxPhoto;
-        private PictureBoxProxy pictureBoxPhoto;
         private System.Windows.Forms.BindingSource friendsDetailsBindingSource;
         private System.Windows.Forms.Label labelFriendBirthdayVal;
         private System.Windows.Forms.Label labelFriendUsernameVal;
@@ -873,8 +854,8 @@
         private System.Windows.Forms.Label labelPostBody;
         private System.Windows.Forms.Label labelPostName;
         private System.Windows.Forms.PictureBox pictureBoxPostPhoto;
-        private System.Windows.Forms.BindingSource postListboxBindingSource;
         private System.Windows.Forms.Label labelBestHourToPostVal;
-        private System.Windows.Forms.BindingSource friendsListboxBindingSource;
+        private System.Windows.Forms.PictureBox pictureNormalURLPictureBox;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

@@ -23,7 +23,7 @@ namespace FacebookDeskAppUI
         {
             try
             {
-                LoginResult result = FacebookService.Login(
+                LoginResult result = FaceBookServiceProxy.Login(
                     "2909349805975755",
                     "public_profile",
                     "email",
@@ -43,6 +43,7 @@ namespace FacebookDeskAppUI
                     "user_photos",
                     "user_posts",
                     "user_hometown");
+
                 Singleton<LoggedinUserData>.Instance.User = result.LoggedInUser;
             }
             catch (Exception ex)

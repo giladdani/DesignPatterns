@@ -10,7 +10,6 @@ namespace FacebookDeskAppUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainForm());
             UIFacade app = new UIFacade();
             app.Run();
         }
