@@ -19,12 +19,12 @@ namespace FacebookDeskAppUI
             Close();
         }
 
-        public void Login()
+        public void Login(string i_AccessToken = "2909349805975755")
         {
             try
             {
-                LoginResult result = FaceBookServiceProxy.Login(
-                    "2909349805975755",
+                LoginResult result = FacebookService.Login(
+                    i_AccessToken,
                     "public_profile",
                     "email",
                     "publish_to_groups",
@@ -44,6 +44,7 @@ namespace FacebookDeskAppUI
                     "user_posts",
                     "user_hometown");
 
+                Singleton<LoggedinUserData>.Instance.LoginResult = result;
                 Singleton<LoggedinUserData>.Instance.User = result.LoggedInUser;
             }
             catch (Exception ex)

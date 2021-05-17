@@ -9,6 +9,7 @@ namespace FacebookDeskAppLogic
     {
         // Private Members
         private User m_User;
+        private LoginResult m_LoginResult;
         private IDictionary<string, List<Post>> m_DictionaryOfPostsByPlaces = new Dictionary<string, List<Post>>();
         private IDictionary<string, List<Post>> m_DictionaryOfPostsByLikes = new Dictionary<string, List<Post>>();
         private IDictionary<string, List<Post>> m_DictionaryOfPostsByComments = new Dictionary<string, List<Post>>();
@@ -23,6 +24,19 @@ namespace FacebookDeskAppLogic
         }
 
         // Properties
+        public LoginResult LoginResult
+        {
+            get
+            {
+                return m_LoginResult;
+            }
+
+            set
+            {
+                m_LoginResult = value;
+            }
+        }
+
         public User User
         {
             get

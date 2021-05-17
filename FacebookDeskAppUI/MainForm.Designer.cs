@@ -92,7 +92,7 @@
             this.labelAboutName = new System.Windows.Forms.Label();
             this.pictureBoxAboutPhoto = new System.Windows.Forms.PictureBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBoxRememberSettings = new System.Windows.Forms.CheckBox();
             labelFriendBirthday = new System.Windows.Forms.Label();
             labelFriendEmail = new System.Windows.Forms.Label();
             labelFriendMiddleName = new System.Windows.Forms.Label();
@@ -288,6 +288,7 @@
             // 
             // listBoxFriends
             // 
+            this.listBoxFriends.DisplayMember = "About";
             this.listBoxFriends.FormattingEnabled = true;
             this.listBoxFriends.ItemHeight = 16;
             this.listBoxFriends.Location = new System.Drawing.Point(34, 50);
@@ -412,6 +413,7 @@
             // 
             // listBoxPhotos
             // 
+            this.listBoxPhotos.DisplayMember = "Album";
             this.listBoxPhotos.FormattingEnabled = true;
             this.listBoxPhotos.ItemHeight = 16;
             this.listBoxPhotos.Location = new System.Drawing.Point(36, 245);
@@ -423,6 +425,7 @@
             // 
             // listBoxAlbums
             // 
+            this.listBoxAlbums.DisplayMember = "Comments";
             this.listBoxAlbums.FormattingEnabled = true;
             this.listBoxAlbums.ItemHeight = 16;
             this.listBoxAlbums.Location = new System.Drawing.Point(33, 69);
@@ -562,6 +565,7 @@
             // 
             // listBoxPosts
             // 
+            this.listBoxPosts.DisplayMember = "Caption";
             this.listBoxPosts.FormattingEnabled = true;
             this.listBoxPosts.ItemHeight = 16;
             this.listBoxPosts.Location = new System.Drawing.Point(21, 175);
@@ -747,15 +751,15 @@
             this.tabControl2.TabIndex = 14;
             this.tabControl2.Tag = "fds";
             // 
-            // checkBox1
+            // checkBoxRememberSettings
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(850, 438);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(154, 21);
-            this.checkBox1.TabIndex = 15;
-            this.checkBox1.Text = "Remember Settings";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBoxRememberSettings.AutoSize = true;
+            this.checkBoxRememberSettings.Location = new System.Drawing.Point(850, 438);
+            this.checkBoxRememberSettings.Name = "checkBoxRememberSettings";
+            this.checkBoxRememberSettings.Size = new System.Drawing.Size(154, 21);
+            this.checkBoxRememberSettings.TabIndex = 15;
+            this.checkBoxRememberSettings.Text = "Remember Settings";
+            this.checkBoxRememberSettings.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -763,7 +767,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1067, 554);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.checkBoxRememberSettings);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.pictureBoxProfilePhoto);
             this.Controls.Add(this.labelProfileName);
@@ -856,6 +860,6 @@
         private System.Windows.Forms.PictureBox pictureBoxPostPhoto;
         private System.Windows.Forms.Label labelBestHourToPostVal;
         private System.Windows.Forms.PictureBox pictureNormalURLPictureBox;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBoxRememberSettings;
     }
 }

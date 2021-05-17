@@ -16,7 +16,7 @@ namespace FacebookDeskAppLogic
         {
             LastWindowLocation = new Point(20, 50);
             LastWindowSize = new Size(1000, 500);
-            RememberUser = false;
+            RememberSettings = false;
             LastAccessToken = null;
         }
 
@@ -66,7 +66,7 @@ namespace FacebookDeskAppLogic
         // Properties
         public Point LastWindowLocation { get; set; }
         public Size LastWindowSize { get; set; }
-        public bool RememberUser { get; set; }
+        public bool RememberSettings { get; set; }
         public string LastAccessToken { get; set; }
     }
 }

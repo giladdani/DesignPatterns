@@ -22,8 +22,6 @@ namespace FacebookDeskAppUI
         public MainForm()
         {
             InitializeComponent();
-            m_LoggedInUserData = Singleton<LoggedinUserData>.Instance;
-            InitFormDetails();
         }
 
         //----------------------------------------------------------------------//
@@ -315,16 +313,13 @@ namespace FacebookDeskAppUI
         //----------------------------------------------------------------------//
         public void InitFormDetails()
         {
+            m_LoggedInUserData = Singleton<LoggedinUserData>.Instance;
             setProfileDetails();
             setAboutPage();
-            setPostsPage();
-            setAlbumsPage();
-            setFriendsPage();
-            setGroupsPage();
-            //new Thread(setPostsPage).Start();
-            //new Thread(setAlbumsPage).Start();
-            //new Thread(setFriendsPage).Start();
-            //new Thread(setGroupsPage).Start();
+            new Thread(setPostsPage).Start();
+            new Thread(setAlbumsPage).Start();
+            new Thread(setFriendsPage).Start();
+            new Thread(setGroupsPage).Start();
         }
 
         private void setProfileDetails()
@@ -388,6 +383,12 @@ namespace FacebookDeskAppUI
             {
                 MessageBox.Show("Problem in fetching groups");
             }
+        }
+
+        public bool IsRememberSettingsChecked()
+        {
+            bool isChecked = checkBoxRememberSettings.Checked;
+            return isChecked;
         }
     }
 }
