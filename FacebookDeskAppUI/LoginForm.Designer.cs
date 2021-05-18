@@ -1,6 +1,6 @@
 ﻿namespace FacebookDeskAppUI
 {
-    partial class LoginForm
+    public partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -17,6 +17,7 @@
             {
                 components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 

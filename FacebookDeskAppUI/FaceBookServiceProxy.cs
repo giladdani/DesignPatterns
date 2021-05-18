@@ -1,54 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Xml.Serialization;
+using FacebookDeskAppLogic;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
 namespace FacebookDeskAppUI
 {
-    class FaceBookServiceProxy
+    class FacebookServiceProxy
     {
         // Data Members
-        private static bool m_IsFirstLogin = true;
-        private const string k_XmlFileName = "LastUserDetails.xml";
+        private const string k_xmlFileName = "UserSettings.xml";
+        private static readonly string Sr_xmlFilePath = Path.Combine(Environment.CurrentDirectory, k_xmlFileName);
 
         // Private Methods
-        private static void deleteFileIfNeeded()
+        private static void saveUserSettingsToFile()
         {
-            if (m_IsFirstLogin == true)
+            UserSettings userSettings = new UserSettings();
+            userSettings.AccessToken = Singleton<LoggedinUserData>.Instance.LoginResult.AccessToken;
+            try
             {
-                if (File.Exists(k_XmlFileName))
+                using (Stream fileStream = new FileStream(Sr_xmlFilePath, FileMode.OpenOrCreate))
                 {
-                    File.Delete(k_XmlFileName);
+                    XmlSerializer mySerializer = new XmlSerializer(userSettings.GetType());
+                    mySerializer.Serialize(fileStream, userSettings);
                 }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to save settings");
             }
         }
 
-        private static LoginResult loadFromFile()
+        private static UserSettings LoadFromFile()
         {
-            LoginResult result = null;
-            if (File.Exists(k_XmlFileName))
+            UserSettings userSettings = new UserSettings();
+            try
             {
-                using(Stream stream = new FileStream(k_XmlFileName, FileMode.OpenOrCreate))
+                if (File.Exists(Sr_xmlFilePath))
                 {
-                    XmlSerializer serializer = new XmlSerializer(result.GetType());
-                    result = serializer.Deserialize(stream) as LoginResult;
+                    using (Stream fileStream = new FileStream(Sr_xmlFilePath, FileMode.OpenOrCreate))
+                    {
+                        XmlSerializer mySerializer = new XmlSerializer(typeof(UserSettings));
+                        userSettings = mySerializer.Deserialize(fileStream) as UserSettings;
+                    }
+                    File.Delete(Sr_xmlFilePath);
                 }
+
+                return userSettings;
             }
-
-            return result;
-        }
-
-        private static void saveToFile(LoginResult result)
-        {
-            using (Stream stream = new FileStream(k_XmlFileName, FileMode.OpenOrCreate))
+            catch (Exception)
             {
-                XmlSerializer serializer = new XmlSerializer(result.GetType());
-                serializer.Serialize(stream, result);
+                throw new Exception("Failed to load settings");
             }
         }
 
@@ -58,16 +61,21 @@ namespace FacebookDeskAppUI
             LoginResult result = null;
             try
             {
-                deleteFileIfNeeded();
-                result = FacebookService.Login(i_AppId, i_Permissions);
-                saveToFile(result);
+                UserSettings userSettings = LoadFromFile();
+                if(string.IsNullOrEmpty(userSettings.AccessToken) == false)
+                {
+                    result = FacebookService.Connect(userSettings.AccessToken);
+                }
+                else
+                {
+                    result = FacebookService.Login(i_AppId, i_Permissions);
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result = loadFromFile();
+                throw new Exception();
             }
 
-            m_IsFirstLogin = false;
             return result;
         }
 
@@ -76,21 +84,27 @@ namespace FacebookDeskAppUI
             LoginResult result = null;
             try
             {
-                deleteFileIfNeeded();
-                result = FacebookService.Login(i_AppId, i_Permissions);
-                saveToFile(result);
+                UserSettings userSettings = LoadFromFile();
+                if (string.IsNullOrEmpty(userSettings.AccessToken) == false)
+                {
+                    result = FacebookService.Connect(userSettings.AccessToken);
+                }
+                else
+                {
+                    result = FacebookService.Login(i_AppId, i_Permissions);
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                result = loadFromFile();
+                throw new Exception();
             }
 
-            m_IsFirstLogin = false;
             return result;
         }
 
         public static void Logout(Action i_CallBackAfterSuccessfulLogout = null, string i_AccessToken = null)
         {
+            saveUserSettingsToFile();
             FacebookService.Logout();
         }
 
@@ -177,5 +191,8 @@ namespace FacebookDeskAppUI
         {
             FacebookService.GetCollectionAsync<T>(i_Connection, i_CallBackDelegate, i_ParentID, i_Fields, i_Limit, i_LoadOptions);
         }
+
+        // Properties
+        public string LastAccessToken { get; set; }
     }
 }

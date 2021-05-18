@@ -1,4 +1,6 @@
-﻿namespace FacebookDeskAppUI
+﻿using System;
+
+namespace FacebookDeskAppUI
 {
     public partial class MainForm
     {
@@ -44,8 +46,8 @@
             this.labelGroupDescriptionVal = new System.Windows.Forms.Label();
             this.labelGroupNameVal = new System.Windows.Forms.Label();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
-            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelListOfGroups = new System.Windows.Forms.Label();
+            this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabFriends = new System.Windows.Forms.TabPage();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.labelListOfFriends = new System.Windows.Forms.Label();
@@ -92,7 +94,7 @@
             this.labelAboutName = new System.Windows.Forms.Label();
             this.pictureBoxAboutPhoto = new System.Windows.Forms.PictureBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.checkBoxRememberSettings = new System.Windows.Forms.CheckBox();
+            this.checkBoxRememberMe = new System.Windows.Forms.CheckBox();
             labelFriendBirthday = new System.Windows.Forms.Label();
             labelFriendEmail = new System.Windows.Forms.Label();
             labelFriendMiddleName = new System.Windows.Forms.Label();
@@ -246,7 +248,6 @@
             // 
             // listBoxGroups
             // 
-            this.listBoxGroups.DataSource = this.groupBindingSource;
             this.listBoxGroups.DisplayMember = "Name";
             this.listBoxGroups.FormattingEnabled = true;
             this.listBoxGroups.ItemHeight = 16;
@@ -257,10 +258,6 @@
             this.listBoxGroups.ValueMember = "Description";
             this.listBoxGroups.SelectedIndexChanged += new System.EventHandler(this.listBoxGroups_SelectedIndexChanged);
             // 
-            // groupBindingSource
-            // 
-            this.groupBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
-            // 
             // labelListOfGroups
             // 
             this.labelListOfGroups.AutoSize = true;
@@ -270,6 +267,10 @@
             this.labelListOfGroups.Size = new System.Drawing.Size(101, 17);
             this.labelListOfGroups.TabIndex = 6;
             this.labelListOfGroups.Text = "List of Groups:";
+            // 
+            // groupBindingSource
+            // 
+            this.groupBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.Group);
             // 
             // tabFriends
             // 
@@ -404,6 +405,7 @@
             this.pictureNormalURLPictureBox.Location = new System.Drawing.Point(234, 69);
             this.pictureNormalURLPictureBox.Name = "pictureNormalURLPictureBox";
             this.pictureNormalURLPictureBox.Size = new System.Drawing.Size(334, 324);
+            this.pictureNormalURLPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureNormalURLPictureBox.TabIndex = 8;
             this.pictureNormalURLPictureBox.TabStop = false;
             // 
@@ -751,15 +753,15 @@
             this.tabControl2.TabIndex = 14;
             this.tabControl2.Tag = "fds";
             // 
-            // checkBoxRememberSettings
+            // checkBoxRememberMe
             // 
-            this.checkBoxRememberSettings.AutoSize = true;
-            this.checkBoxRememberSettings.Location = new System.Drawing.Point(850, 438);
-            this.checkBoxRememberSettings.Name = "checkBoxRememberSettings";
-            this.checkBoxRememberSettings.Size = new System.Drawing.Size(154, 21);
-            this.checkBoxRememberSettings.TabIndex = 15;
-            this.checkBoxRememberSettings.Text = "Remember Settings";
-            this.checkBoxRememberSettings.UseVisualStyleBackColor = true;
+            this.checkBoxRememberMe.AutoSize = true;
+            this.checkBoxRememberMe.Location = new System.Drawing.Point(850, 438);
+            this.checkBoxRememberMe.Name = "checkBoxRememberMe";
+            this.checkBoxRememberMe.Size = new System.Drawing.Size(122, 21);
+            this.checkBoxRememberMe.TabIndex = 15;
+            this.checkBoxRememberMe.Text = "Remember Me";
+            this.checkBoxRememberMe.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -767,7 +769,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1067, 554);
-            this.Controls.Add(this.checkBoxRememberSettings);
+            this.Controls.Add(this.checkBoxRememberMe);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.pictureBoxProfilePhoto);
             this.Controls.Add(this.labelProfileName);
@@ -860,6 +862,6 @@
         private System.Windows.Forms.PictureBox pictureBoxPostPhoto;
         private System.Windows.Forms.Label labelBestHourToPostVal;
         private System.Windows.Forms.PictureBox pictureNormalURLPictureBox;
-        private System.Windows.Forms.CheckBox checkBoxRememberSettings;
+        private System.Windows.Forms.CheckBox checkBoxRememberMe;
     }
 }

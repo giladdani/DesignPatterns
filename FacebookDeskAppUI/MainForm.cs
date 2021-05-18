@@ -4,7 +4,6 @@ using System.Threading;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookDeskAppLogic;
-using Message = FacebookWrapper.ObjectModel.Message;
 
 namespace FacebookDeskAppUI
 {
@@ -15,8 +14,8 @@ namespace FacebookDeskAppUI
         private const string k_PlacesTitle = "Places";
         private const string k_CommentsTitle = "Comments";
         private const string k_LikesTitle = "Likes";
+        private static readonly object Sr_lock = new object();
         private LoggedinUserData m_LoggedInUserData;
-        private static readonly object sr_lock = new object();
 
         // Ctor
         public MainForm()
@@ -26,12 +25,12 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //------------------------  General Methods  -------------------------//
+        //------------------------  General Methods  ---------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setListBox<T>(ICollection<T> i_List, ListBox i_ListBox)
         {
-            lock(sr_lock)
+            lock(Sr_lock)
             {
                 i_ListBox.Items.Clear();
                 foreach(T elem in i_List)
@@ -43,7 +42,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //------------------- Setting ListBox of posts Methods----------------//
+        //------------------- Setting ListBox of posts Methods------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setPostsListByPlaces(string i_PlaceName)
@@ -94,7 +93,7 @@ namespace FacebookDeskAppUI
                 PostWrapper postWrapper = listBoxPosts.SelectedItem as PostWrapper;
                 postBindingSource.DataSource = postWrapper.Post;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Failed to show post");
             }
@@ -102,7 +101,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //----------- Setting combobox of sub filter of posts Methods---------//
+        //----------- Setting combobox of sub filter of posts Methods-----------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setComboboxPostsSubFilter(ICollection<string> i_Options)
@@ -129,7 +128,7 @@ namespace FacebookDeskAppUI
                 labelPostsSubFilter.Text = "Filter by likes";
                 setComboboxPostsSubFilterByNumericOptions();
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Could not fetch posts :(");
             }
@@ -158,6 +157,7 @@ namespace FacebookDeskAppUI
         {
             string optionOfFilter = comboBoxPostsFilter.Text;
             string optionOfSubFilter = comboBoxPostsSubFilter.Text;
+            listBoxPosts.Items.Clear();
 
             if (optionOfFilter == k_PlacesTitle)
             {
@@ -175,7 +175,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //-----------------combobox of filter of posts Methods----------------//
+        //-----------------combobox of filter of posts Methods------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void setComboBoxPostsFilter()
@@ -224,7 +224,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //---------------------------login Methods----------------------------//
+        //---------------------------login Methods------------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private void listBoxAlbums_SelectedIndexChanged(object sender, EventArgs e)
@@ -238,7 +238,7 @@ namespace FacebookDeskAppUI
                     List<Photo> photos = m_LoggedInUserData.FetchPhotosByAlbumName(albumName);
                     setListBox(photos, listBoxPhotos);
                 }
-                catch(Exception ex)
+                catch(Exception)
                 {
                     MessageBox.Show("Error fetching photos from album");
                 }
@@ -265,7 +265,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //---------------------------Wrapper Methods--------------------------//
+        //---------------------------Wrapper Methods----------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         private ICollection<PostWrapper> generateListOfPostsWrappers(ICollection<Post> i_ListOfPosts)
@@ -287,7 +287,7 @@ namespace FacebookDeskAppUI
                 int bestHourToPost = m_LoggedInUserData.GetBestTimeForStatus();
                 labelBestHourToPostVal.Text = $"Best hour to post: {bestHourToPost}:00";
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Could not calculate Best time :(");
             }
@@ -300,7 +300,7 @@ namespace FacebookDeskAppUI
                 Status postedStatus = m_LoggedInUserData.User.PostStatus(richTextBoxCreatePost.Text);
                 MessageBox.Show("Post was published successfully!");
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 MessageBox.Show("Could not publish post :(");
             }
@@ -308,7 +308,7 @@ namespace FacebookDeskAppUI
 
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
-        //----------------------initialization Methods------------------------//
+        //----------------------initialization Methods--------------------------//
         //----------------------------------------------------------------------//
         //----------------------------------------------------------------------//
         public void InitFormDetails()
@@ -351,7 +351,7 @@ namespace FacebookDeskAppUI
                 ICollection<Album> albums = m_LoggedInUserData.GetAllAlbums();
                 setListBox(albums, listBoxAlbums);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error in fetching albums");
             }
@@ -365,7 +365,7 @@ namespace FacebookDeskAppUI
                 ICollection<User> friends = m_LoggedInUserData.GetAllFriends();
                 setListBox(friends, listBoxFriends);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Error in fetching friends");
             }
@@ -379,7 +379,7 @@ namespace FacebookDeskAppUI
                 ICollection<Group> groups = m_LoggedInUserData.GetAllGroups();
                 setListBox(groups, listBoxGroups);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Problem in fetching groups");
             }
@@ -387,7 +387,7 @@ namespace FacebookDeskAppUI
 
         public bool IsRememberSettingsChecked()
         {
-            bool isChecked = checkBoxRememberSettings.Checked;
+            bool isChecked = checkBoxRememberMe.Checked;
             return isChecked;
         }
     }

@@ -3,19 +3,20 @@ using System.Reflection;
 
 namespace FacebookDeskAppLogic
 {
-    public static class Singleton<T> where T: class
+    public static class Singleton<T> where T : class
     {
-        static Singleton(){}
-
-        private static readonly object sr_CreationalLockContext = new object();
+        // Private Members
+        private static readonly object Sr_CreationalLockContext = new object();
         private static T s_Instance = null;
+
+        // Properties
         public static T Instance
         {
             get
             {
                 if(s_Instance == null)
                 {
-                    lock(sr_CreationalLockContext)
+                    lock(Sr_CreationalLockContext)
                     {
                         if(s_Instance == null)
                         {
