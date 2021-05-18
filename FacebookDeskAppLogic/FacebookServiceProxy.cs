@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Xml.Serialization;
-using FacebookDeskAppLogic;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 
-namespace FacebookDeskAppUI
+namespace FacebookDeskAppLogic
 {
-    class FacebookServiceProxy
+    public class FacebookServiceProxy
     {
         // Data Members
         private const string k_xmlFileName = "UserSettings.xml";
@@ -32,7 +31,7 @@ namespace FacebookDeskAppUI
             }
         }
 
-        private static UserSettings LoadFromFile()
+        private static UserSettings loadFromFile()
         {
             UserSettings userSettings = new UserSettings();
             try
@@ -44,6 +43,7 @@ namespace FacebookDeskAppUI
                         XmlSerializer mySerializer = new XmlSerializer(typeof(UserSettings));
                         userSettings = mySerializer.Deserialize(fileStream) as UserSettings;
                     }
+
                     File.Delete(Sr_xmlFilePath);
                 }
 
@@ -61,8 +61,8 @@ namespace FacebookDeskAppUI
             LoginResult result = null;
             try
             {
-                UserSettings userSettings = LoadFromFile();
-                if(string.IsNullOrEmpty(userSettings.AccessToken) == false)
+                UserSettings userSettings = loadFromFile();
+                if (string.IsNullOrEmpty(userSettings.AccessToken) == false)
                 {
                     result = FacebookService.Connect(userSettings.AccessToken);
                 }
@@ -84,7 +84,7 @@ namespace FacebookDeskAppUI
             LoginResult result = null;
             try
             {
-                UserSettings userSettings = LoadFromFile();
+                UserSettings userSettings = loadFromFile();
                 if (string.IsNullOrEmpty(userSettings.AccessToken) == false)
                 {
                     result = FacebookService.Connect(userSettings.AccessToken);
