@@ -25,7 +25,7 @@ namespace FacebookDeskAppLogic
                     mySerializer.Serialize(fileStream, userSettings);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new Exception("Failed to save settings");
             }

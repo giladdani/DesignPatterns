@@ -512,7 +512,7 @@ namespace FacebookDeskAppUI
             this.richTextBoxCreatePost.Name = "richTextBoxCreatePost";
             this.richTextBoxCreatePost.Size = new System.Drawing.Size(193, 51);
             this.richTextBoxCreatePost.TabIndex = 16;
-            this.richTextBoxCreatePost.Text = "";
+            this.richTextBoxCreatePost.Text = String.Empty;
             // 
             // buttonCreatePost
             // 
