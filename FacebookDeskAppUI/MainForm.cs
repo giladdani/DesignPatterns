@@ -106,7 +106,7 @@ namespace FacebookDeskAppUI
         //----------------------------------------------------------------------//
         private void setComboboxPostsSubFilter(ICollection<string> i_Options)
         {
-            foreach (string option in i_Options)
+            foreach(string option in i_Options)
             {
                 comboBoxPostsSubFilter.Items.Add(option);
             }
@@ -159,15 +159,15 @@ namespace FacebookDeskAppUI
             string optionOfSubFilter = comboBoxPostsSubFilter.Text;
             listBoxPosts.Items.Clear();
 
-            if (optionOfFilter == k_PlacesTitle)
+            if(optionOfFilter == k_PlacesTitle)
             {
                 setPostsListByPlaces(optionOfSubFilter);
             }
-            else if (optionOfFilter == k_LikesTitle)
+            else if(optionOfFilter == k_LikesTitle)
             {
                 setListBoxPostsByLikes(optionOfSubFilter);
             }
-            else if (optionOfFilter == k_CommentsTitle)
+            else if(optionOfFilter == k_CommentsTitle)
             {
                 setListBoxPostsByComments(optionOfSubFilter);
             }
@@ -192,23 +192,23 @@ namespace FacebookDeskAppUI
         private void comboBoxPostsFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             string category = comboBoxPostsFilter.Text;
-            if (category == k_AllTitle)
+            if(category == k_AllTitle)
             {
                 comboBoxPostsSubFilter.Visible = false;
                 labelPostsSubFilter.Visible = false;
                 setListBoxPostsByListOfAll();
             }
-            else if (category == k_PlacesTitle)
+            else if(category == k_PlacesTitle)
             {
                 setGeneralOptionsToSubFilterComponents();
                 setComboboxPostsSubFilterByPlaces();
             }
-            else if (category == k_LikesTitle)
+            else if(category == k_LikesTitle)
             {
                 setGeneralOptionsToSubFilterComponents();
                 setComboboxPostsSubFilterByLikes();
             }
-            else if (category == k_CommentsTitle)
+            else if(category == k_CommentsTitle)
             {
                 setGeneralOptionsToSubFilterComponents();
                 setComboboxPostsSubFilterByComments();
@@ -271,7 +271,7 @@ namespace FacebookDeskAppUI
         private ICollection<PostWrapper> generateListOfPostsWrappers(ICollection<Post> i_ListOfPosts)
         {
             ICollection<PostWrapper> listOfPostWrapper = new List<PostWrapper>();
-            foreach (Post post in i_ListOfPosts)
+            foreach(Post post in i_ListOfPosts)
             {
                 PostWrapper postWrapper = new PostWrapper(post);
                 listOfPostWrapper.Add(postWrapper);
@@ -351,7 +351,7 @@ namespace FacebookDeskAppUI
                 ICollection<Album> albums = m_LoggedInUserData.GetAllAlbums();
                 setListBox(albums, listBoxAlbums);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 MessageBox.Show("Error in fetching albums");
             }
@@ -365,7 +365,7 @@ namespace FacebookDeskAppUI
                 ICollection<User> friends = m_LoggedInUserData.GetAllFriends();
                 setListBox(friends, listBoxFriends);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 MessageBox.Show("Error in fetching friends");
             }
@@ -379,7 +379,7 @@ namespace FacebookDeskAppUI
                 ICollection<Group> groups = m_LoggedInUserData.GetAllGroups();
                 setListBox(groups, listBoxGroups);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 MessageBox.Show("Problem in fetching groups");
             }

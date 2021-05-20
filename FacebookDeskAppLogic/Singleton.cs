@@ -14,11 +14,11 @@ namespace FacebookDeskAppLogic
         {
             get
             {
-                if(s_Instance == null)
+                if (s_Instance == null)
                 {
-                    lock(Sr_CreationalLockContext)
+                    lock (Sr_CreationalLockContext)
                     {
-                        if(s_Instance == null)
+                        if (s_Instance == null)
                         {
                             Type typeOfT = typeof(T);
                             ConstructorInfo[] constructors = typeOfT.GetConstructors(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);

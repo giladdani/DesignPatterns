@@ -79,7 +79,7 @@ namespace FacebookDeskAppLogic
                 int numOfLikes = i_Post.LikedBy.Count;
                 addPostToDictionaryByNumericValue(numOfLikes, m_DictionaryOfPostsByLikes, i_Post);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -192,18 +192,18 @@ namespace FacebookDeskAppLogic
             List<Photo> listOfPhotos = new List<Photo>();
             try
             {
-                foreach(Album album in m_User.Albums)
+                foreach (Album album in m_User.Albums)
                 {
-                    if(album.Name == i_AlbumName)
+                    if (album.Name == i_AlbumName)
                     {
-                        foreach(Photo photo in album.Photos)
+                        foreach (Photo photo in album.Photos)
                         {
                             listOfPhotos.Add(photo);
                         }
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -266,7 +266,7 @@ namespace FacebookDeskAppLogic
 
         public ICollection<Post> GetPostsByNumOfLikes(string i_NumOfLikes)
         {
-            if(m_DictionaryOfPostsByLikes.ContainsKey(i_NumOfLikes))
+            if (m_DictionaryOfPostsByLikes.ContainsKey(i_NumOfLikes))
             {
                 return m_DictionaryOfPostsByLikes[i_NumOfLikes];
             }
@@ -278,7 +278,7 @@ namespace FacebookDeskAppLogic
 
         public ICollection<Post> GetPostsByNumOfComments(string i_NumOfComments)
         {
-            if(m_DictionaryOfPostsByComments.ContainsKey(i_NumOfComments))
+            if (m_DictionaryOfPostsByComments.ContainsKey(i_NumOfComments))
             {
                 return m_DictionaryOfPostsByComments[i_NumOfComments];
             }
@@ -297,7 +297,7 @@ namespace FacebookDeskAppLogic
         {
             int hourWithMaxLikesPerPost = -1;
             LikesAndPostsCounter[] likesAndPostCounterArray = new LikesAndPostsCounter[24];
-            foreach(Post post in m_User.Posts)
+            foreach (Post post in m_User.Posts)
             {
                 // get post time
                 try
@@ -314,7 +314,7 @@ namespace FacebookDeskAppLogic
             }
 
             double max = -1;
-            for(int i = 0; i < 24; i++)
+            for (int i = 0; i < 24; i++)
             {
                 LikesAndPostsCounter counter = likesAndPostCounterArray[i];
                 if (counter.CalcAvgLikesPerPost() > max)
